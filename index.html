@@ -635,13 +635,22 @@
   function addItem() {
     const textarea = document.getElementById("itemText");
     const raw = textarea.value.trim();
-    if (!raw) return;
-    const detected = detectTradeId(raw);
-    const finalTradeId = detected || currentTradeId;
-    const trade = findTrade(finalTradeId);
-    if (!trade) return;
-    const cleaned = stripLeadingAlias(raw, trade);
+    if (!raw && !pendingAudioData) return;
     const now = new Date();
+    let finalTradeId, cleaned;
+    if (raw) {
+      const detected = detectTradeId(raw);
+      finalTradeId = detected || currentTradeId;
+      const trade = findTrade(finalTradeId);
+      if (!trade) return;
+      cleaned = stripLeadingAlias(raw, trade);
+    } else {
+      finalTradeId = currentTradeId;
+      const trade = findTrade(finalTradeId);
+      if (!trade) return;
+      cleaned = `Voice note (${now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })})`;
+    }
+    const trade = findTrade(finalTradeId);
     items.push({
       id: uid(), tradeId: finalTradeId, text: cleaned, checked: false,
       createdAt: now.toISOString(), dueAt: addBusinessDays(now, 3).toISOString(),
@@ -651,14 +660,19 @@
     currentTradeId = finalTradeId;
     document.getElementById("tradeSelect").value = finalTradeId;
     textarea.value = "";
-    document.getElementById("addItemBtn").disabled = true;
     const hadAudio = !!pendingAudioData;
     pendingAudioData = null;
     renderVoiceNotePreview();
+    updateAddButtonState();
     let msg = `Added to ${trade.name}`;
     if (!ok) msg = hadAudio ? "Storage full — item and voice note may not persist after reload" : "Added, but storage is full — this item may not persist after reload";
     showToast(msg);
     renderPunchGroups();
+  }
+
+  function updateAddButtonState() {
+    const textarea = document.getElementById("itemText");
+    document.getElementById("addItemBtn").disabled = !(textarea.value.trim() || pendingAudioData);
   }
 
   // ---------- Send links ----------
@@ -704,10 +718,11 @@
   }
   function renderVoiceNotePreview() {
     const preview = document.getElementById("voiceNotePreview");
-    if (!pendingAudioData) { preview.style.display = "none"; preview.innerHTML = ""; return; }
+    if (!pendingAudioData) { preview.style.display = "none"; preview.innerHTML = ""; updateAddButtonState(); return; }
     preview.style.display = "flex";
     preview.innerHTML = `<audio controls src="${pendingAudioData}"></audio><button class="icon-btn" id="clearVoiceNoteBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>`;
     document.getElementById("clearVoiceNoteBtn").addEventListener("click", () => { pendingAudioData = null; renderVoiceNotePreview(); });
+    updateAddButtonState();
   }
   async function toggleVoiceNoteRecording() {
     const btn = document.getElementById("voiceNoteBtn");
@@ -778,7 +793,7 @@
     const textarea = document.getElementById("itemText");
     const addBtn = document.getElementById("addItemBtn");
     textarea.addEventListener("input", () => {
-      addBtn.disabled = !textarea.value.trim();
+      updateAddButtonState();
       const detected = detectTradeId(textarea.value);
       if (detected) { currentTradeId = detected; document.getElementById("tradeSelect").value = detected; }
     });
