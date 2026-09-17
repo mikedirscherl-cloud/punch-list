@@ -179,6 +179,16 @@
   #voiceNotePreview audio { flex: 1; height: 32px; min-width: 0; }
   .item-audio { width: 100%; height: 32px; margin-top: 6px; }
 
+  /* Walking session */
+  .session-status { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin: 12px 0 8px; }
+  .session-status .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex-shrink: 0; animation: blink 1s ease infinite; }
+  .chip-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+  .chip {
+    flex-shrink: 0; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--surface); font-size: 12.5px; font-weight: 700; white-space: nowrap; color: var(--ink);
+  }
+  .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
   /* Punch groups */
   .group { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-top: 12px; }
   .group-header { width: 100%; background: var(--surface); border: none; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; text-align: left; }
@@ -277,6 +287,21 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       Add to punch list
     </button>
+  </div>
+
+  <!-- Walking session: continuous recording, tap a trade to switch what you're logging -->
+  <div class="card card-pad section-gap" id="sessionCard">
+    <label class="field-label">Walking session (continuous)</label>
+    <p class="voice-note-sub" style="margin:0 0 10px;">Keep recording while you walk the site. Tap a trade each time you move to a new item — it saves the last one and starts the next.</p>
+    <button class="btn-ghost" id="sessionStartBtn" style="justify-content:center;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+      Start walking session
+    </button>
+    <div id="sessionActive" style="display:none;">
+      <div class="session-status"><span class="dot"></span> Recording: <strong id="sessionCurrentTrade">—</strong></div>
+      <div class="chip-row" id="sessionChipRow"></div>
+      <button class="btn btn-primary" id="sessionFinishBtn" style="margin-top:10px;">Finish session</button>
+    </div>
   </div>
 
   <!-- Punch list -->
@@ -770,6 +795,101 @@
     sub.textContent = "Recording — tap the button again when you're done.";
   }
 
+  // ---------- Walking session (continuous recording, tap-to-switch trade) ----------
+  let sessionStream = null;
+  let sessionRecorder = null;
+  let sessionChunks = [];
+  let sessionTradeId = null;
+  let sessionActive = false;
+  let sessionHasAudio = false;
+
+  function renderSessionChips() {
+    const row = document.getElementById("sessionChipRow");
+    row.innerHTML = trades.map((t) => `<button type="button" class="chip ${t.id === sessionTradeId ? "active" : ""}" data-trade-id="${t.id}">${escapeHtml(t.name)}</button>`).join("");
+    row.querySelectorAll(".chip").forEach((chip) => {
+      chip.addEventListener("click", () => switchSessionTrade(chip.dataset.tradeId));
+    });
+  }
+  function updateSessionStatus() {
+    const trade = findTrade(sessionTradeId);
+    document.getElementById("sessionCurrentTrade").textContent = trade ? trade.name : "—";
+  }
+  function beginSegmentRecording() {
+    const mimeType = pickAudioMimeType();
+    sessionChunks = [];
+    sessionHasAudio = false;
+    sessionRecorder = mimeType ? new MediaRecorder(sessionStream, { mimeType }) : new MediaRecorder(sessionStream);
+    sessionRecorder.ondataavailable = (e) => { if (e.data.size > 0) { sessionChunks.push(e.data); sessionHasAudio = true; } };
+    sessionRecorder.start();
+    updateSessionStatus();
+  }
+  function addSessionItem(tradeId, audioData) {
+    const trade = findTrade(tradeId);
+    if (!trade) return;
+    const now = new Date();
+    items.push({
+      id: uid(), tradeId, text: `${trade.name} voice note (${now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })})`,
+      checked: false, createdAt: now.toISOString(), dueAt: addBusinessDays(now, 3).toISOString(), audioData,
+    });
+    saveItems();
+    renderPunchGroups();
+  }
+  function finalizeCurrentSegment(callback) {
+    if (!sessionRecorder || sessionRecorder.state !== "recording") { callback && callback(); return; }
+    const tradeIdForSegment = sessionTradeId;
+    const mimeType = sessionRecorder.mimeType;
+    sessionRecorder.onstop = () => {
+      if (sessionHasAudio && sessionChunks.length) {
+        const blob = new Blob(sessionChunks, { type: mimeType || "audio/mp4" });
+        const reader = new FileReader();
+        reader.onloadend = () => { addSessionItem(tradeIdForSegment, reader.result); callback && callback(); };
+        reader.readAsDataURL(blob);
+      } else {
+        callback && callback();
+      }
+    };
+    sessionRecorder.stop();
+  }
+  function switchSessionTrade(newTradeId) {
+    if (newTradeId === sessionTradeId) return;
+    finalizeCurrentSegment(() => {
+      const trade = findTrade(newTradeId);
+      sessionTradeId = newTradeId;
+      currentTradeId = newTradeId;
+      document.getElementById("tradeSelect").value = newTradeId;
+      renderSessionChips();
+      updateSessionStatus();
+      beginSegmentRecording();
+      showToast(`Now logging: ${trade ? trade.name : ""}`);
+    });
+  }
+  async function startSession() {
+    if (!audioRecordingSupported()) { showToast("This needs a browser with microphone support"); return; }
+    try {
+      sessionStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      showToast("Microphone permission denied");
+      return;
+    }
+    sessionActive = true;
+    document.getElementById("sessionStartBtn").style.display = "none";
+    document.getElementById("sessionActive").style.display = "block";
+    document.getElementById("voiceNoteBtn").disabled = true;
+    sessionTradeId = currentTradeId || (trades[0] && trades[0].id);
+    renderSessionChips();
+    beginSegmentRecording();
+  }
+  function endSession() {
+    finalizeCurrentSegment(() => {
+      sessionActive = false;
+      if (sessionStream) { sessionStream.getTracks().forEach((t) => t.stop()); sessionStream = null; }
+      document.getElementById("sessionActive").style.display = "none";
+      document.getElementById("sessionStartBtn").style.display = "flex";
+      document.getElementById("voiceNoteBtn").disabled = false;
+      showToast("Session saved");
+    });
+  }
+
   // ---------- Init ----------
   function init() {
     loadState();
@@ -801,10 +921,14 @@
 
     if (audioRecordingSupported()) {
       document.getElementById("voiceNoteBtn").addEventListener("click", toggleVoiceNoteRecording);
+      document.getElementById("sessionStartBtn").addEventListener("click", startSession);
+      document.getElementById("sessionFinishBtn").addEventListener("click", endSession);
     } else {
       document.getElementById("voiceNoteBtn").disabled = true;
       document.getElementById("voiceNoteLabel").textContent = "Voice notes not supported in this browser";
       document.getElementById("voiceNoteSub").textContent = "Try opening this app in Safari.";
+      document.getElementById("sessionStartBtn").disabled = true;
+      document.getElementById("sessionCard").style.opacity = "0.5";
     }
   }
 
