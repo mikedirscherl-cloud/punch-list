@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Punch List">
+<meta name="theme-color" content="#D9622B">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Site%20Punch%20List%22%2C%22short_name%22%3A%22Punch%20List%22%2C%22display%22%3A%22standalone%22%2C%22start_url%22%3A%22.%22%2C%22background_color%22%3A%22%23FAF7F1%22%2C%22theme_color%22%3A%22%23D9622B%22%7D">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<title>Site Punch List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F1;
+    --surface: #FFFFFF;
+    --surface-alt: #F4EFE4;
+    --border: #E7E0CF;
+    --ink: #221E18;
+    --muted: #706A5C;
+    --dim: #948C7A;
+    --accent: #D9622B;
+    --accent-strong: #C2531F;
+    --accent-soft: #FBE9DD;
+    --success: #3F7D4F;
+    --success-soft: #E6F3E8;
+    --warn-soft: #FBEEC9;
+    --warn-ink: #8A5A00;
+    --info: #3A6EA5;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 1px 2px rgba(34,30,24,0.04), 0 6px 18px rgba(34,30,24,0.06);
+    --font-display: 'Manrope', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17140F;
+      --surface: #221E18;
+      --surface-alt: #2A251D;
+      --border: #3A3327;
+      --ink: #F3EEE3;
+      --muted: #B8AF9E;
+      --dim: #8F8776;
+      --accent: #E8774A;
+      --accent-strong: #F08856;
+      --accent-soft: #3A2318;
+      --success: #6FBE82;
+      --success-soft: #1E3324;
+      --warn-soft: #3A2E12;
+      --warn-ink: #F0C674;
+      --info: #6FA1D6;
+      --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 6px 18px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17140F; --surface: #221E18; --surface-alt: #2A251D; --border: #3A3327;
+    --ink: #F3EEE3; --muted: #B8AF9E; --dim: #8F8776; --accent: #E8774A;
+    --accent-strong: #F08856; --accent-soft: #3A2318; --success: #6FBE82;
+    --success-soft: #1E3324; --warn-soft: #3A2E12; --warn-ink: #F0C674; --info: #6FA1D6;
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 6px 18px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+    padding-top: env(safe-area-inset-top);
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+  .overflow-x { overflow-x: auto; }
+
+  /* Banner */
+  .banner {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn-ink) 25%, transparent);
+    border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 16px;
+    box-shadow: var(--shadow);
+  }
+  .banner p { margin: 0; font-size: 13px; font-weight: 600; color: var(--warn-ink); letter-spacing: .01em; }
+  .banner .icon { font-size: 18px; line-height: 1; flex-shrink: 0; }
+
+  /* Header */
+  header { padding: 20px 0 14px; }
+  .header-row { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    width: 44px; height: 44px; border-radius: 12px; background: var(--accent);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    box-shadow: var(--shadow);
+  }
+  .logo svg { width: 22px; height: 22px; }
+  h1 { font-family: var(--font-display); font-weight: 800; font-size: 24px; margin: 0; letter-spacing: -0.01em; }
+  .subtitle { color: var(--muted); font-size: 13.5px; margin: 2px 0 0; }
+  .hint { color: var(--dim); font-size: 12px; margin: 4px 0 0; }
+
+  /* Cards */
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .card-pad { padding: 16px; }
+  .section-gap { margin-top: 18px; }
+
+  /* Buttons */
+  button { font-family: inherit; cursor: pointer; }
+  .btn {
+    border: none; border-radius: var(--radius-sm); font-weight: 700; font-size: 14px;
+    padding: 11px 16px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    transition: transform .05s ease, opacity .15s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--accent); color: #fff; width: 100%; }
+  .btn-primary:active:not(:disabled) { background: var(--accent-strong); }
+  .btn-primary:disabled { opacity: .35; cursor: not-allowed; }
+  .btn-ghost {
+    background: var(--surface); border: 1px solid var(--border); color: var(--ink); width: 100%;
+    display: flex; align-items: center; justify-content: space-between; padding: 13px 16px; font-size: 14.5px;
+  }
+  .btn-dashed {
+    background: transparent; border: 1.5px dashed var(--dim); color: var(--muted); width: 100%;
+    padding: 10px; font-size: 13.5px; font-weight: 600; border-radius: var(--radius-sm);
+  }
+  .btn-sm { font-size: 12.5px; padding: 8px 12px; border-radius: 8px; font-weight: 700; color: #fff; }
+  .btn-email { background: var(--info); }
+  .btn-text { background: var(--success); }
+  .btn-sm:disabled { opacity: .3; cursor: not-allowed; }
+  .link-btn { background: none; border: none; color: var(--muted); font-size: 12.5px; font-weight: 600; padding: 4px 2px; }
+  .icon-btn { background: none; border: none; color: var(--dim); padding: 8px; margin: -8px; display: flex; }
+
+  /* Inputs */
+  label.field-label { display: block; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: 6px; }
+  input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+    width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 10px 12px; font-size: 16px; color: var(--ink); font-family: inherit;
+  }
+  textarea { resize: none; }
+  input::placeholder, textarea::placeholder { color: var(--dim); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .col-span-2 { grid-column: span 2; }
+
+  /* Trade badges */
+  .badge {
+    display: inline-flex; align-items: center; background: var(--accent); color: #fff;
+    font-size: 11px; font-weight: 800; letter-spacing: .02em; padding: 5px 9px; border-radius: 7px; flex-shrink: 0;
+  }
+
+  /* Trade manager rows */
+  .trade-row { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; margin-top: 10px; }
+  .trade-row .grid2 input { font-size: 14px; }
+  .trade-row .note { font-size: 10.5px; color: var(--dim); margin: 8px 0 0; }
+
+  /* Mic row */
+  .compose-row { display: flex; align-items: flex-start; gap: 8px; margin-top: 6px; }
+  .trade-select-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+  .trade-select-row select { font-size: 13px; padding: 8px 10px; }
+  .trade-select-row .lbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--dim); flex-shrink: 0; }
+  .trade-select-row .note { font-size: 9.5px; color: var(--dim); flex-shrink: 0; white-space: nowrap; }
+
+  /* Voice note (real audio recording — works on iPhone) */
+  .voice-note-row { margin-top: 10px; }
+  .voice-note-btn {
+    display: flex; align-items: center; gap: 8px; width: 100%;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 10px 14px; font-size: 13.5px; font-weight: 600; color: var(--ink);
+  }
+  .voice-note-btn.recording { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-strong); }
+  .voice-note-btn .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex-shrink: 0; display: none; }
+  .voice-note-btn.recording .dot { display: block; animation: blink 1s ease infinite; }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+  .voice-note-sub { font-size: 10.5px; color: var(--dim); margin: 5px 2px 0; }
+  #voiceNotePreview { margin-top: 8px; display: none; align-items: center; gap: 8px; }
+  #voiceNotePreview audio { flex: 1; height: 32px; min-width: 0; }
+  .item-audio { width: 100%; height: 32px; margin-top: 6px; }
+
+  /* Walking session */
+  .session-status { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin: 12px 0 8px; }
+  .session-status .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex-shrink: 0; animation: blink 1s ease infinite; }
+  .chip-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+  .chip {
+    flex-shrink: 0; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--surface); font-size: 12.5px; font-weight: 700; white-space: nowrap; color: var(--ink);
+  }
+  .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* Punch groups */
+  .group { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-top: 12px; }
+  .group-header { width: 100%; background: var(--surface); border: none; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; text-align: left; }
+  .group-header.done { background: var(--success-soft); }
+  .group-header .left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .group-header .name { font-family: var(--font-display); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: .01em; }
+  .group-header .status { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .group-body { background: var(--surface-alt); padding: 12px 14px; }
+  .group-actions { display: flex; justify-content: flex-end; gap: 14px; margin-bottom: 8px; }
+  .item-row { display: flex; align-items: flex-start; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+  .item-row:last-child { margin-bottom: 0; }
+  .checkbox { flex-shrink: 0; width: 21px; height: 21px; border-radius: 6px; border: 2px solid var(--dim); background: var(--surface); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .checkbox.checked { background: var(--success); border-color: var(--success); }
+  .item-text { font-size: 14px; margin: 0; }
+  .item-text.checked { text-decoration: line-through; color: var(--dim); }
+  .item-due { font-size: 11px; color: var(--dim); margin: 3px 0 0; display: flex; align-items: center; gap: 4px; }
+  .empty-state { text-align: center; color: var(--dim); font-size: 13.5px; padding: 40px 0; }
+
+  /* Send section */
+  .send-row { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 11px 14px; margin-top: 8px; box-shadow: var(--shadow); }
+  .send-row.complete { background: var(--success-soft); }
+  .send-row .tname { font-weight: 700; font-size: 13.5px; }
+  .send-row .topen { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .send-row .complete-label { font-size: 12px; font-weight: 700; color: var(--success); }
+  .send-actions { display: flex; gap: 8px; }
+
+  /* Toast */
+  #toast {
+    position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: var(--bg); font-size: 13.5px; font-weight: 600;
+    padding: 10px 18px; border-radius: 999px; box-shadow: var(--shadow);
+    opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease;
+    z-index: 50; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="banner">
+    <span class="icon">⏱️</span>
+    <p>All items are due within 3 business days of issue date</p>
+  </div>
+
+  <header>
+    <div class="header-row">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"></rect><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"></path><path d="M9 11l2 2 4-4"></path></svg>
+      </div>
+      <div>
+        <h1>Site Punch List</h1>
+        <p class="subtitle">Audio or typed notes, organized by trade.</p>
+        <p class="hint" id="micHint">Tip: tap the description field, then tap the 🎤 on your keyboard to dictate.</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Manage trades -->
+  <div class="section-gap">
+    <button class="btn-ghost" id="tradesToggle">
+      <span style="display:flex;align-items:center;gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9622B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <span id="tradesToggleLabel">Manage trades</span>
+      </span>
+      <svg id="tradesChevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div id="tradesPanel" style="display:none;"></div>
+  </div>
+
+  <!-- Add item -->
+  <div class="card card-pad section-gap">
+    <label class="field-label">Item description</label>
+    <div class="compose-row">
+      <textarea id="itemText" rows="2" placeholder="Say or type the trade first — e.g. &quot;Plumber, leak under kitchen sink&quot;…"></textarea>
+    </div>
+
+    <div class="trade-select-row">
+      <span class="lbl">Trade:</span>
+      <select id="tradeSelect"></select>
+      <span class="note">auto-detected, tap to change</span>
+    </div>
+
+    <div class="voice-note-row">
+      <button class="voice-note-btn" id="voiceNoteBtn" type="button">
+        <span class="dot"></span>
+        <svg id="voiceNoteIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+        <span id="voiceNoteLabel">Record voice note (optional)</span>
+      </button>
+      <p class="voice-note-sub" id="voiceNoteSub">Your phone will ask to allow microphone access the first time.</p>
+      <div id="voiceNotePreview"></div>
+    </div>
+
+    <button class="btn btn-primary" id="addItemBtn" style="margin-top:12px;" disabled>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      Add to punch list
+    </button>
+  </div>
+
+  <!-- Walking session: continuous recording, tap a trade to switch what you're logging -->
+  <div class="card card-pad section-gap" id="sessionCard">
+    <label class="field-label">Walking session (continuous)</label>
+    <p class="voice-note-sub" style="margin:0 0 10px;">Keep recording while you walk the site. Tap a trade each time you move to a new item — it saves the last one and starts the next.</p>
+    <button class="btn-ghost" id="sessionStartBtn" style="justify-content:center;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+      Start walking session
+    </button>
+    <div id="sessionActive" style="display:none;">
+      <div class="session-status"><span class="dot"></span> Recording: <strong id="sessionCurrentTrade">—</strong></div>
+      <div class="chip-row" id="sessionChipRow"></div>
+      <button class="btn btn-primary" id="sessionFinishBtn" style="margin-top:10px;">Finish session</button>
+    </div>
+  </div>
+
+  <!-- Punch list -->
+  <div id="punchGroups" class="section-gap"></div>
+
+  <!-- Send section -->
+  <div id="sendSection" class="section-gap" style="display:none;">
+    <h2 style="font-family:var(--font-display);font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.01em;margin:0 0 2px;">Send punch lists</h2>
+    <p style="font-size:12px;color:var(--muted);margin:0 0 10px;">Trades with everything checked off are complete and won't be shown here. Everyone else gets resent their open items.</p>
+    <div id="sendRows"></div>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+</body>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- Utilities ----------
+  const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+  function addBusinessDays(date, days) {
+    const d = new Date(date);
+    let added = 0;
+    while (added < days) {
+      d.setDate(d.getDate() + 1);
+      const day = d.getDay();
+      if (day !== 0 && day !== 6) added++;
+    }
+    return d;
+  }
+  function formatDate(d) {
+    return new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  // ---------- Default data ----------
+  const DEFAULT_TRADES = [
+    { id: uid(), code: "", name: "Appliances", contact: "Ferguson (Jason May)", email: "John.May@ferguson.com", phone: "303-330-7919", aliases: "appliance" },
+    { id: uid(), code: "", name: "Bath Accessories", contact: "Alpine Lumber (Josh Crawford)", email: "jcrawford@alpinelumber.com", phone: "303-434-3048", aliases: "bath" },
+    { id: uid(), code: "", name: "Cabinets", contact: "Precision Homes (Alec Berglind)", email: "alec@precisionhomesofcolorado.com", phone: "720-766-1148", aliases: "cabinet, cabinetry" },
+    { id: uid(), code: "", name: "Countertop - Solid Surface", contact: "Granite World (Scott Scripter)", email: "scott@granite-world.com", phone: "303-818-4941", aliases: "countertop, countertops, counter" },
+    { id: uid(), code: "", name: "Flooring", contact: "Arlun (Ryan Linstrom)", email: "ryan.lindstrom@arlun.com", phone: "", aliases: "floor, floors" },
+    { id: uid(), code: "", name: "Door Hardware", contact: "Alpine Lumber (Josh Crawford)", email: "jcrawford@alpinelumber.com", phone: "303-434-3048", aliases: "" },
+    { id: uid(), code: "", name: "Drywall Labor", contact: "Paul Johnson Drywall (Stacy Walgraeve)", email: "stacy@pauljohnsondrywall.com", phone: "(602) 319-7473", aliases: "drywall, rock, hang, mud, tape" },
+    { id: uid(), code: "", name: "Drywall Material", contact: "L&W Supply (Aaron Wilson, Joey Yardley)", email: "Aaron.Wilson@LWSupply.com", phone: "208-681-6905", aliases: "drywall material, sheetrock" },
+    { id: uid(), code: "", name: "Electric", contact: "Hi Power (Ryan Mchugh)", email: "rmchugh@hipowerelectric.us", phone: "303-589-2899", aliases: "electrician, electrical" },
+    { id: uid(), code: "", name: "Electric Fixtures", contact: "Galleria Lighting (Susan Stewart)", email: "sstewart@qedelectric.com", phone: "303-435-5966", aliases: "light fixtures, lighting" },
+    { id: uid(), code: "", name: "Excavating", contact: "Martin Construction (Doug Buhman)", email: "dbuhman@martinnd.com", phone: "720-498-0495", aliases: "excavation, dirt work, grading" },
+    { id: uid(), code: "", name: "Exterior Clean", contact: "Fuzion (Bryant Robertson)", email: "brobertson@fuzionfs.com", phone: "970-657-0631", aliases: "exterior cleaning, power wash" },
+    { id: uid(), code: "", name: "Exterior Gutters", contact: "BigHorn (Steve Miller)", email: "steve@bighornraingutter.com", phone: "720-325-7851", aliases: "" },
+    { id: uid(), code: "", name: "Fall Protection", contact: "Safety Rails (AMY SMITH)", email: "SAFETYRAILSCO@COFENCE.COM", phone: "303-651-5719", aliases: "" },
+    { id: uid(), code: "", name: "Fence", contact: "Split Rail (Danielle Olson)", email: "dolson@splitrailfenceco.com", phone: "(720)601-3623", aliases: "fencing" },
+    { id: uid(), code: "", name: "Flatwork", contact: "Dan's Concrete (Delma Apodaca)", email: "dansconcrete@aol.com", phone: "303-367-4599", aliases: "concrete, driveway, sidewalk" },
+    { id: uid(), code: "", name: "Foundation", contact: "McClure (Devin Bundy or Stephen Berardi)", email: "devin@mcclure-concrete.com", phone: "303-419-0726", aliases: "foundation crew" },
+    { id: uid(), code: "", name: "Framing", contact: "SW Construction (Tom Schlender)", email: "tom@swconstr.com", phone: "303-435-1565", aliases: "framer, framers" },
+    { id: uid(), code: "", name: "Garage Door", contact: "Lodi Garage (Kevin Ellis)", email: "Kevin@lodidoor.com", phone: "602-469-1280", aliases: "garage" },
+    { id: uid(), code: "", name: "HVAC", contact: "Smith & Willis (Ike Willis)", email: "ike@smithandwillis.com", phone: "303-489-9163", aliases: "heating, air, furnace" },
+    { id: uid(), code: "", name: "Inspections - Energy", contact: "EnergyLogic (Rusty Buick)", email: "rusty.buick@nrglogic.com", phone: "720-305-8436", aliases: "" },
+    { id: uid(), code: "", name: "Inspections - Soils", contact: "CTL Thompson (John Baker)", email: "denver@ctlthompson.com", phone: "303-825-0777", aliases: "" },
+    { id: uid(), code: "", name: "Inspections - Structural", contact: "Green City Consulting, LLC (Ronald Ngantung)", email: "rngantung@greencityconsulting.com", phone: "720-280-4472", aliases: "" },
+    { id: uid(), code: "", name: "Insulation", contact: "USI RG Insulation (Ken Baker, Raudel Contreras)", email: "rcontreras@usiinc.com", phone: "303-287-9625", aliases: "insulate" },
+    { id: uid(), code: "", name: "Interior Clean", contact: "Down Right Clean (Brittney Leonard)", email: "BrittneyL@downrightclean.com", phone: "720-557-0602", aliases: "clean, cleaning, final clean" },
+    { id: uid(), code: "", name: "Landscaping", contact: "Autumn Landscaping (Marc Robinson)", email: "autumnlandscaping.marc@gmail.com", phone: "303-794-6993", aliases: "landscape, landscaper, sod, sprinkler" },
+    { id: uid(), code: "", name: "Low Voltage", contact: "Hi Power (Ryan Mchugh)", email: "rmchugh@hipowerelectric.us", phone: "303-589-2899", aliases: "low voltage, data, cable" },
+    { id: uid(), code: "", name: "Lumber - Supplier", contact: "Alpine Lumber (Josh Crawford)", email: "jcrawford@alpinelumber.com", phone: "303-434-3048", aliases: "lumber" },
+    { id: uid(), code: "", name: "Mirrors-Shower Enclosures", contact: "Louisville Glass (Chris Gargano)", email: "louisvilleglassinc@yahoo.com", phone: "303-665-2303", aliases: "mirrors, shower enclosure, shower door" },
+    { id: uid(), code: "", name: "Paint", contact: "Comex Painting (Maria)", email: "comexpropainting@gmail.com", phone: "720-576-4898", aliases: "painter, painting" },
+    { id: uid(), code: "PPH", name: "Plumbing", contact: "Performance Plumbing (Justin Pestotnik)", email: "justin@PPHsince1979.com", phone: "303-431-7920 (wk) 303-870-2015 (cell)", aliases: "plumber" },
+    { id: uid(), code: "", name: "Roofing", contact: "Campbell Beard (Rob Moran)", email: "rob.moran@campbellbeardroofing.com", phone: "303-288-2828", aliases: "roofer, roof" },
+    { id: uid(), code: "", name: "Sewer Scope", contact: "Ultimate Power Wash (Marcus Clinton)", email: "Ultimatepowerwash.marcus@gmail.com", phone: "303-598-8258", aliases: "sewer" },
+    { id: uid(), code: "", name: "Stairs", contact: "K&L Stairs (Kyl Christians)", email: "KChristians@klcontractors.com", phone: "970-566-2620", aliases: "railing, rail" },
+    { id: uid(), code: "", name: "Stone", contact: "Environmental Stoneworks (Sara Katt)", email: "sara.katt@cornerstone-bb.com", phone: "720-584-6653", aliases: "stonework" },
+    { id: uid(), code: "", name: "Survey", contact: "B & J Surveying (Kenny Pollack - Director of Operations)", email: "info@bjsurvey.net", phone: "303-850-0559 ext 106, Cell: 303.726.9065", aliases: "surveyor" },
+    { id: uid(), code: "", name: "Trim Labor", contact: "Bradley Interiors (Laurie Minor)", email: "minor2525@comcast.net", phone: "303-985-0040", aliases: "trim, carpenter, carpentry, base, casing" },
+    { id: uid(), code: "", name: "Trim Material", contact: "Bradley Interiors (Laurie Minor)", email: "minor2525@comcast.net", phone: "303-985-0040", aliases: "trim material" },
+    { id: uid(), code: "", name: "Waterproofing", contact: "Slinger Pros (Laura Estrada)", email: "info@slingerpros.com", phone: "303-532-9948", aliases: "waterproof" },
+    { id: uid(), code: "", name: "Window Coverings", contact: "Arlun (Ryan Linstrom)", email: "ryan.lindstrom@arlun.com", phone: "", aliases: "blinds, shades" },
+    { id: uid(), code: "", name: "Windows", contact: "Beacon (Jacob Gillespie)", email: "Jacob.Gillespie@QXO.com", phone: "303-908-7824", aliases: "window" },
+  ];
+
+  // ---------- State + persistence ----------
+  const TRADES_KEY = "punchlist_trades_v2"; // v2: seeded from Sky Ranch Contacts.xlsx
+  const ITEMS_KEY = "punchlist_items_v1";
+  let trades = [];
+  let items = [];
+  let currentTradeId = null;
+
+  function loadState() {
+    try {
+      const t = localStorage.getItem(TRADES_KEY);
+      trades = t ? JSON.parse(t) : DEFAULT_TRADES;
+    } catch (e) { trades = DEFAULT_TRADES; }
+    try {
+      const i = localStorage.getItem(ITEMS_KEY);
+      items = i ? JSON.parse(i) : [];
+    } catch (e) { items = []; }
+  }
+  function saveTrades() { try { localStorage.setItem(TRADES_KEY, JSON.stringify(trades)); } catch (e) {} }
+  function saveItems() { try { localStorage.setItem(ITEMS_KEY, JSON.stringify(items)); return true; } catch (e) { return false; } }
+
+  // ---------- Trade detection ----------
+  function getAliases(trade) {
+    const raw = [trade.name, trade.code, trade.contact, trade.aliases].filter(Boolean);
+    const parts = [];
+    raw.forEach((v) => {
+      String(v).split(/[\/,&]|\band\b/i).forEach((p) => {
+        const t = p.trim();
+        if (t) parts.push(t);
+      });
+    });
+    return [...new Set(parts.map((p) => p.toLowerCase()))].filter((p) => p.length >= 3);
+  }
+  function detectTradeId(text) {
+    if (!text) return null;
+    const lower = text.toLowerCase();
+    let best = null;
+    trades.forEach((trade) => {
+      getAliases(trade).forEach((alias) => {
+        const re = new RegExp(`\\b${escapeRegex(alias)}\\b`, "i");
+        const m = lower.match(re);
+        if (m && (!best || m.index < best.index || (m.index === best.index && alias.length > best.len))) {
+          best = { id: trade.id, index: m.index, len: alias.length };
+        }
+      });
+    });
+    return best ? best.id : null;
+  }
+  function stripLeadingAlias(text, trade) {
+    const aliases = getAliases(trade).sort((a, b) => b.length - a.length);
+    for (const alias of aliases) {
+      const re = new RegExp(`^\\s*${escapeRegex(alias)}\\s*[:,-]?\\s*`, "i");
+      if (re.test(text)) {
+        const stripped = text.replace(re, "").trim();
+        if (stripped) return stripped;
+      }
+    }
+    return text;
+  }
+  function displayCode(trade) { return trade.code || trade.name.slice(0, 4).toUpperCase(); }
+  function findTrade(id) { return trades.find((t) => t.id === id); }
+
+  // ---------- Toast ----------
+  let toastTimer = null;
+  function showToast(msg) {
+    const el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+  }
+
+  // ---------- Rendering ----------
+  function renderTradeSelect() {
+    const sel = document.getElementById("tradeSelect");
+    const prev = currentTradeId;
+    sel.innerHTML = trades.map((t) => `<option value="${t.id}">${escapeHtml(t.name)} (${escapeHtml(displayCode(t))})</option>`).join("");
+    if (prev && trades.some((t) => t.id === prev)) {
+      sel.value = prev;
+    } else if (trades.length) {
+      currentTradeId = trades[0].id;
+      sel.value = currentTradeId;
+    }
+  }
+
+  function renderTradesPanel() {
+    const panel = document.getElementById("tradesPanel");
+    const rows = trades.map((t) => `
+      <div class="trade-row" data-trade-id="${t.id}">
+        <div class="grid2">
+          <input type="text" data-field="code" placeholder="Code (e.g. PPH)" value="${escapeHtml(t.code)}">
+          <input type="text" data-field="name" placeholder="Trade (e.g. Plumber)" value="${escapeHtml(t.name)}">
+          <input type="text" data-field="contact" placeholder="Contact name" value="${escapeHtml(t.contact)}" class="col-span-2">
+          <input type="text" data-field="email" placeholder="Email" value="${escapeHtml(t.email)}" class="col-span-2">
+          <input type="text" data-field="phone" placeholder="Phone" value="${escapeHtml(t.phone)}" class="col-span-2">
+          <input type="text" data-field="aliases" placeholder="Other words that mean this trade (comma separated)" value="${escapeHtml(t.aliases || "")}" class="col-span-2">
+        </div>
+        <p class="note">Name, code, contact, and the words above all trigger auto-detect for this trade.</p>
+        <button class="link-btn" data-action="delete-trade" style="color:var(--accent);display:flex;align-items:center;gap:4px;margin-top:6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+          Remove trade
+        </button>
+      </div>`).join("");
+    panel.innerHTML = rows + `<button class="btn-dashed" id="addTradeBtn" style="margin-top:10px;">+ Add trade</button>`;
+    document.getElementById("addTradeBtn").addEventListener("click", () => {
+      trades.push({ id: uid(), code: "", name: "", contact: "", email: "", phone: "", aliases: "" });
+      saveTrades();
+      renderTradesPanel();
+      renderTradeSelect();
+      requestAnimationFrame(() => {
+        const rows = panel.querySelectorAll(".trade-row");
+        const last = rows[rows.length - 1];
+        if (last) {
+          last.scrollIntoView({ behavior: "smooth", block: "center" });
+          const firstInput = last.querySelector('input[data-field="name"]');
+          if (firstInput) firstInput.focus();
+        }
+      });
+    });
+    panel.querySelectorAll(".trade-row").forEach((row) => {
+      const tid = row.dataset.tradeId;
+      row.querySelectorAll("input").forEach((inp) => {
+        inp.addEventListener("input", () => {
+          const trade = findTrade(tid);
+          if (trade) trade[inp.dataset.field] = inp.value;
+        });
+        inp.addEventListener("blur", () => {
+          saveTrades();
+          renderTradeSelect();
+          renderPunchGroups();
+          renderSendSection();
+        });
+      });
+      row.querySelector('[data-action="delete-trade"]').addEventListener("click", () => {
+        trades = trades.filter((t) => t.id !== tid);
+        items = items.filter((it) => it.tradeId !== tid);
+        saveTrades(); saveItems();
+        renderTradesPanel(); renderTradeSelect(); renderPunchGroups(); renderSendSection();
+      });
+    });
+  }
+
+  const collapsedState = {};
+
+  function renderPunchGroups() {
+    const container = document.getElementById("punchGroups");
+    const groups = trades.map((t) => ({ trade: t, list: items.filter((it) => it.tradeId === t.id) })).filter((g) => g.list.length > 0);
+
+    if (groups.length === 0) {
+      container.innerHTML = `<div class="empty-state">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="margin-bottom:8px;"><rect x="6" y="4" width="12" height="17" rx="2"></rect><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"></path></svg>
+        <div>No punch items yet. Add one above to get started.</div>
+      </div>`;
+      document.getElementById("sendSection").style.display = "none";
+      return;
+    }
+
+    container.innerHTML = groups.map(({ trade, list }) => {
+      const doneCount = list.filter((it) => it.checked).length;
+      const allDone = doneCount === list.length;
+      const isCollapsed = !!collapsedState[trade.id];
+      const itemsHtml = list.map((it) => `
+        <div class="item-row" data-item-id="${it.id}">
+          <button class="checkbox ${it.checked ? "checked" : ""}" data-action="toggle-item">
+            ${it.checked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ""}
+          </button>
+          <div style="flex:1;min-width:0;">
+            <p class="item-text ${it.checked ? "checked" : ""}">${escapeHtml(it.text)}</p>
+            <p class="item-due">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Due ${formatDate(it.dueAt)}
+            </p>
+            ${it.audioData ? `<audio class="item-audio" controls src="${it.audioData}"></audio>` : ""}
+          </div>
+          <button class="icon-btn" data-action="delete-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>`).join("");
+
+      return `
+        <div class="group" data-trade-id="${trade.id}">
+          <button class="group-header ${allDone ? "done" : ""}" data-action="toggle-collapse">
+            <div class="left">
+              <span class="badge">${escapeHtml(displayCode(trade))}</span>
+              <div style="text-align:left;min-width:0;">
+                <div class="name">${escapeHtml(trade.name)} — ${escapeHtml(trade.contact)}</div>
+                <div class="status">${allDone ? "All items complete ✓" : `${doneCount}/${list.length} complete`}</div>
+              </div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${isCollapsed ? '<polyline points="6 9 12 15 18 9"></polyline>' : '<polyline points="18 15 12 9 6 15"></polyline>'}</svg>
+          </button>
+          ${isCollapsed ? "" : `<div class="group-body">
+            <div class="group-actions">
+              <button class="link-btn" data-action="check-all">Check all</button>
+              <button class="link-btn" data-action="uncheck-all">Uncheck all</button>
+            </div>
+            ${itemsHtml}
+          </div>`}
+        </div>`;
+    }).join("");
+
+    container.querySelectorAll(".group").forEach((groupEl) => {
+      const tid = groupEl.dataset.tradeId;
+      groupEl.querySelector('[data-action="toggle-collapse"]').addEventListener("click", () => {
+        collapsedState[tid] = !collapsedState[tid];
+        renderPunchGroups();
+      });
+      const checkAll = groupEl.querySelector('[data-action="check-all"]');
+      const uncheckAll = groupEl.querySelector('[data-action="uncheck-all"]');
+      if (checkAll) checkAll.addEventListener("click", () => { setAllForTrade(tid, true); });
+      if (uncheckAll) uncheckAll.addEventListener("click", () => { setAllForTrade(tid, false); });
+      groupEl.querySelectorAll(".item-row").forEach((row) => {
+        const iid = row.dataset.itemId;
+        row.querySelector('[data-action="toggle-item"]').addEventListener("click", () => toggleItem(iid));
+        row.querySelector('[data-action="delete-item"]').addEventListener("click", () => deleteItem(iid));
+      });
+    });
+
+    renderSendSection();
+  }
+
+  function renderSendSection() {
+    const section = document.getElementById("sendSection");
+    const rowsEl = document.getElementById("sendRows");
+    const groups = trades.map((t) => ({ trade: t, list: items.filter((it) => it.tradeId === t.id) })).filter((g) => g.list.length > 0);
+    if (groups.length === 0) { section.style.display = "none"; return; }
+    section.style.display = "";
+    rowsEl.innerHTML = groups.map(({ trade, list }) => {
+      const open = list.filter((it) => !it.checked).length;
+      if (open === 0) {
+        return `<div class="send-row complete">
+          <span class="tname">${escapeHtml(trade.name)} (${escapeHtml(displayCode(trade))})</span>
+          <span class="complete-label">✓ Complete — no resend needed</span>
+        </div>`;
+      }
+      return `<div class="send-row" data-trade-id="${trade.id}">
+        <div>
+          <div class="tname">${escapeHtml(trade.name)} (${escapeHtml(displayCode(trade))})</div>
+          <div class="topen">${open} open item${open !== 1 ? "s" : ""}</div>
+        </div>
+        <div class="send-actions">
+          <button class="btn-sm btn-email" data-action="send-email" ${trade.email ? "" : "disabled"}>Email</button>
+          <button class="btn-sm btn-text" data-action="send-text" ${trade.phone ? "" : "disabled"}>Text</button>
+        </div>
+      </div>`;
+    }).join("");
+    rowsEl.querySelectorAll(".send-row").forEach((row) => {
+      const tid = row.dataset.tradeId;
+      if (!tid) return;
+      const emailBtn = row.querySelector('[data-action="send-email"]');
+      const textBtn = row.querySelector('[data-action="send-text"]');
+      if (emailBtn) emailBtn.addEventListener("click", () => sendEmail(tid));
+      if (textBtn) textBtn.addEventListener("click", () => sendText(tid));
+    });
+  }
+
+  // ---------- Mutations ----------
+  function toggleItem(id) {
+    const it = items.find((x) => x.id === id);
+    if (it) { it.checked = !it.checked; saveItems(); renderPunchGroups(); }
+  }
+  function deleteItem(id) {
+    items = items.filter((x) => x.id !== id);
+    saveItems(); renderPunchGroups();
+  }
+  function setAllForTrade(tid, val) {
+    items.forEach((it) => { if (it.tradeId === tid) it.checked = val; });
+    saveItems(); renderPunchGroups();
+  }
+  function addItem() {
+    const textarea = document.getElementById("itemText");
+    const raw = textarea.value.trim();
+    if (!raw && !pendingAudioData) return;
+    const now = new Date();
+    let finalTradeId, cleaned;
+    if (raw) {
+      const detected = detectTradeId(raw);
+      finalTradeId = detected || currentTradeId;
+      const trade = findTrade(finalTradeId);
+      if (!trade) return;
+      cleaned = stripLeadingAlias(raw, trade);
+    } else {
+      finalTradeId = currentTradeId;
+      const trade = findTrade(finalTradeId);
+      if (!trade) return;
+      cleaned = `Voice note (${now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })})`;
+    }
+    const trade = findTrade(finalTradeId);
+    items.push({
+      id: uid(), tradeId: finalTradeId, text: cleaned, checked: false,
+      createdAt: now.toISOString(), dueAt: addBusinessDays(now, 3).toISOString(),
+      audioData: pendingAudioData || null,
+    });
+    const ok = saveItems();
+    currentTradeId = finalTradeId;
+    document.getElementById("tradeSelect").value = finalTradeId;
+    textarea.value = "";
+    const hadAudio = !!pendingAudioData;
+    pendingAudioData = null;
+    renderVoiceNotePreview();
+    updateAddButtonState();
+    let msg = `Added to ${trade.name}`;
+    if (!ok) msg = hadAudio ? "Storage full — item and voice note may not persist after reload" : "Added, but storage is full — this item may not persist after reload";
+    showToast(msg);
+    renderPunchGroups();
+  }
+
+  function updateAddButtonState() {
+    const textarea = document.getElementById("itemText");
+    document.getElementById("addItemBtn").disabled = !(textarea.value.trim() || pendingAudioData);
+  }
+
+  // ---------- Send links ----------
+  function buildBody(trade, list) {
+    const lines = list.map((it, idx) => `${idx + 1}. [${it.checked ? "x" : " "}] ${it.text}  (due ${formatDate(it.dueAt)})`);
+    return `PUNCH LIST — ${trade.name.toUpperCase()} (${displayCode(trade)})\n` +
+      `Attn: ${trade.contact}\n\n` +
+      `All items below are due within 3 business days of the date issued.\n\n` +
+      lines.join("\n") + `\n\n— Sent from site punch list`;
+  }
+  function sendEmail(tid) {
+    const trade = findTrade(tid);
+    const list = items.filter((it) => it.tradeId === tid);
+    const subject = `Punch List — ${trade.name} (${displayCode(trade)}) — Action Needed`;
+    const body = buildBody(trade, list);
+    window.location.href = `mailto:${encodeURIComponent(trade.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+  function sendText(tid) {
+    const trade = findTrade(tid);
+    const list = items.filter((it) => it.tradeId === tid);
+    const shortLines = list.map((it, idx) => `${idx + 1}. ${it.text}`).join("\n");
+    const body = `Punch List - ${trade.name} (${displayCode(trade)}). Due within 3 business days.\n${shortLines}`;
+    const sep = isIOS ? "&" : "?";
+    window.location.href = `sms:${trade.phone}${sep}body=${encodeURIComponent(body)}`;
+  }
+
+  // ---------- Voice notes (real audio recording via getUserMedia — this works on iPhone) ----------
+  let mediaRecorder = null;
+  let audioChunks = [];
+  let audioStream = null;
+  let isRecordingAudio = false;
+  let pendingAudioData = null;
+
+  function audioRecordingSupported() {
+    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+  }
+  function pickAudioMimeType() {
+    const candidates = ["audio/mp4", "audio/webm;codecs=opus", "audio/webm", "audio/wav"];
+    for (const c of candidates) {
+      if (window.MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(c)) return c;
+    }
+    return "";
+  }
+  function renderVoiceNotePreview() {
+    const preview = document.getElementById("voiceNotePreview");
+    if (!pendingAudioData) { preview.style.display = "none"; preview.innerHTML = ""; updateAddButtonState(); return; }
+    preview.style.display = "flex";
+    preview.innerHTML = `<audio controls src="${pendingAudioData}"></audio><button class="icon-btn" id="clearVoiceNoteBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>`;
+    document.getElementById("clearVoiceNoteBtn").addEventListener("click", () => { pendingAudioData = null; renderVoiceNotePreview(); });
+    updateAddButtonState();
+  }
+  async function toggleVoiceNoteRecording() {
+    const btn = document.getElementById("voiceNoteBtn");
+    const label = document.getElementById("voiceNoteLabel");
+    const sub = document.getElementById("voiceNoteSub");
+    if (isRecordingAudio) {
+      mediaRecorder.stop();
+      return;
+    }
+    if (!audioRecordingSupported()) {
+      showToast("Voice notes need a browser with microphone support");
+      return;
+    }
+    try {
+      audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      sub.textContent = "Microphone access was blocked — check Settings → Safari → Microphone and allow this site, then try again.";
+      showToast("Microphone permission denied");
+      return;
+    }
+    const mimeType = pickAudioMimeType();
+    audioChunks = [];
+    try {
+      mediaRecorder = mimeType ? new MediaRecorder(audioStream, { mimeType }) : new MediaRecorder(audioStream);
+    } catch (e) {
+      showToast("Couldn't start the recorder on this browser");
+      audioStream.getTracks().forEach((t) => t.stop());
+      return;
+    }
+    mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) audioChunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      isRecordingAudio = false;
+      btn.classList.remove("recording");
+      label.textContent = "Record voice note (optional)";
+      audioStream.getTracks().forEach((t) => t.stop());
+      const blob = new Blob(audioChunks, { type: mediaRecorder.mimeType || mimeType || "audio/mp4" });
+      const reader = new FileReader();
+      reader.onloadend = () => { pendingAudioData = reader.result; renderVoiceNotePreview(); };
+      reader.readAsDataURL(blob);
+    };
+    mediaRecorder.start();
+    isRecordingAudio = true;
+    btn.classList.add("recording");
+    label.textContent = "Recording… tap to stop";
+    sub.textContent = "Recording — tap the button again when you're done.";
+  }
+
+  // ---------- Walking session (continuous recording, tap-to-switch trade) ----------
+  let sessionStream = null;
+  let sessionRecorder = null;
+  let sessionChunks = [];
+  let sessionTradeId = null;
+  let sessionActive = false;
+  let sessionHasAudio = false;
+
+  function renderSessionChips() {
+    const row = document.getElementById("sessionChipRow");
+    row.innerHTML = trades.map((t) => `<button type="button" class="chip ${t.id === sessionTradeId ? "active" : ""}" data-trade-id="${t.id}">${escapeHtml(t.name)}</button>`).join("");
+    row.querySelectorAll(".chip").forEach((chip) => {
+      chip.addEventListener("click", () => switchSessionTrade(chip.dataset.tradeId));
+    });
+  }
+  function updateSessionStatus() {
+    const trade = findTrade(sessionTradeId);
+    document.getElementById("sessionCurrentTrade").textContent = trade ? trade.name : "—";
+  }
+  function beginSegmentRecording() {
+    const mimeType = pickAudioMimeType();
+    sessionChunks = [];
+    sessionHasAudio = false;
+    sessionRecorder = mimeType ? new MediaRecorder(sessionStream, { mimeType }) : new MediaRecorder(sessionStream);
+    sessionRecorder.ondataavailable = (e) => { if (e.data.size > 0) { sessionChunks.push(e.data); sessionHasAudio = true; } };
+    sessionRecorder.start();
+    updateSessionStatus();
+  }
+  function addSessionItem(tradeId, audioData) {
+    const trade = findTrade(tradeId);
+    if (!trade) return;
+    const now = new Date();
+    items.push({
+      id: uid(), tradeId, text: `${trade.name} voice note (${now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })})`,
+      checked: false, createdAt: now.toISOString(), dueAt: addBusinessDays(now, 3).toISOString(), audioData,
+    });
+    saveItems();
+    renderPunchGroups();
+  }
+  function finalizeCurrentSegment(callback) {
+    if (!sessionRecorder || sessionRecorder.state !== "recording") { callback && callback(); return; }
+    const tradeIdForSegment = sessionTradeId;
+    const mimeType = sessionRecorder.mimeType;
+    sessionRecorder.onstop = () => {
+      if (sessionHasAudio && sessionChunks.length) {
+        const blob = new Blob(sessionChunks, { type: mimeType || "audio/mp4" });
+        const reader = new FileReader();
+        reader.onloadend = () => { addSessionItem(tradeIdForSegment, reader.result); callback && callback(); };
+        reader.readAsDataURL(blob);
+      } else {
+        callback && callback();
+      }
+    };
+    sessionRecorder.stop();
+  }
+  function switchSessionTrade(newTradeId) {
+    if (newTradeId === sessionTradeId) return;
+    finalizeCurrentSegment(() => {
+      const trade = findTrade(newTradeId);
+      sessionTradeId = newTradeId;
+      currentTradeId = newTradeId;
+      document.getElementById("tradeSelect").value = newTradeId;
+      renderSessionChips();
+      updateSessionStatus();
+      beginSegmentRecording();
+      showToast(`Now logging: ${trade ? trade.name : ""}`);
+    });
+  }
+  async function startSession() {
+    if (!audioRecordingSupported()) { showToast("This needs a browser with microphone support"); return; }
+    try {
+      sessionStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      showToast("Microphone permission denied");
+      return;
+    }
+    sessionActive = true;
+    document.getElementById("sessionStartBtn").style.display = "none";
+    document.getElementById("sessionActive").style.display = "block";
+    document.getElementById("voiceNoteBtn").disabled = true;
+    sessionTradeId = currentTradeId || (trades[0] && trades[0].id);
+    renderSessionChips();
+    beginSegmentRecording();
+  }
+  function endSession() {
+    finalizeCurrentSegment(() => {
+      sessionActive = false;
+      if (sessionStream) { sessionStream.getTracks().forEach((t) => t.stop()); sessionStream = null; }
+      document.getElementById("sessionActive").style.display = "none";
+      document.getElementById("sessionStartBtn").style.display = "flex";
+      document.getElementById("voiceNoteBtn").disabled = false;
+      showToast("Session saved");
+    });
+  }
+
+  // ---------- Init ----------
+  function init() {
+    loadState();
+    currentTradeId = trades.length ? trades[0].id : null;
+
+    renderTradeSelect();
+    renderTradesPanel();
+    renderPunchGroups();
+
+    document.getElementById("tradeSelect").addEventListener("change", (e) => { currentTradeId = e.target.value; });
+
+    document.getElementById("tradesToggle").addEventListener("click", () => {
+      const panel = document.getElementById("tradesPanel");
+      const chevron = document.getElementById("tradesChevron");
+      const isOpen = panel.style.display !== "none";
+      panel.style.display = isOpen ? "none" : "block";
+      chevron.innerHTML = isOpen ? '<polyline points="6 9 12 15 18 9"></polyline>' : '<polyline points="18 15 12 9 6 15"></polyline>';
+    });
+    document.getElementById("tradesToggleLabel").textContent = `Manage trades (${trades.length})`;
+
+    const textarea = document.getElementById("itemText");
+    const addBtn = document.getElementById("addItemBtn");
+    textarea.addEventListener("input", () => {
+      updateAddButtonState();
+      const detected = detectTradeId(textarea.value);
+      if (detected) { currentTradeId = detected; document.getElementById("tradeSelect").value = detected; }
+    });
+    addBtn.addEventListener("click", addItem);
+
+    if (audioRecordingSupported()) {
+      document.getElementById("voiceNoteBtn").addEventListener("click", toggleVoiceNoteRecording);
+      document.getElementById("sessionStartBtn").addEventListener("click", startSession);
+      document.getElementById("sessionFinishBtn").addEventListener("click", endSession);
+    } else {
+      document.getElementById("voiceNoteBtn").disabled = true;
+      document.getElementById("voiceNoteLabel").textContent = "Voice notes not supported in this browser";
+      document.getElementById("voiceNoteSub").textContent = "Try opening this app in Safari.";
+      document.getElementById("sessionStartBtn").disabled = true;
+      document.getElementById("sessionCard").style.opacity = "0.5";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
+</script>
+
+</html>
